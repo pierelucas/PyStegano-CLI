@@ -1,6 +1,6 @@
 # PyStegano CLI Version - A Tool to hide AES encrypted Strings in files
 
-# Generate new Key and backup old:
+# Generate new key and backup old:
 ./pystegano.py gen
 
 # Encryption:
@@ -9,5 +9,5 @@
 # Decryption:
 ./pystegano.py -pwd PASSWORD -decf FILE
 
-# Save Output to file:
+# Save output to file:
 -s FILE
