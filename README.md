@@ -2,14 +2,14 @@
 
 # Usage:
 
-- Generate new Key and backup old:
+# Generate new Key and backup old:
 ./pystegano.py gen
 
-- Encryption:
+# Encryption:
 ./pystegano.py -pwd PASSWORD -mes MESSAGE -encf FILE
 
-- Decryption:
+# Decryption:
 ./pystegano.py -pwd PASSWORD -decf FILE
 
-- Save Output to file:
+# Save Output to file:
 -s FILE
