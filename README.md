@@ -1,7 +1,5 @@
 # PyStegano CLI Version - A Tool to hide AES encrypted Strings in files
 
-# Usage:
-
 # Generate new Key and backup old:
 ./pystegano.py gen
 
