@@ -230,6 +230,7 @@ class PyStegano():
 
 # TO BE CONTINUED ...
 
+# Name Guard
 if __name__ == "__main__":
     pystegano = PyStegano()
     pystegano.run()
