@@ -228,6 +228,7 @@ class PyStegano():
             print("Not enough ARGS!")
             sys.exit(0)
 
+
 # TO BE CONTINUED ...
 
 # Name Guard
