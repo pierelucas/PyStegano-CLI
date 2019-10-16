@@ -1,7 +1,7 @@
 # PyStegano - Steganographie Tool to hide encrypted Textpassages in Files
 #
-# Creation:    09.10.2019
-# Last Update: 10.10.2019
+# Creation:    15.10.2019
+# Last Update: 16.10.2019
 #
 #
 # MIT License
