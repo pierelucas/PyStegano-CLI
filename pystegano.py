@@ -88,15 +88,18 @@ class PyStegano():
         self.dec_ciphertext = None
 
     def out(self, *, mode):
+        # Output Methode
         if mode == "enc": return "Succesfully store encrypted hidden message in " + self.filepath + " at " + self.path_name(self.filepath)
         if mode == "dec": return "Sucessfully decrypt stored hidden message in " + Fore.CYAN + self.filepath + Style.RESET_ALL + " at " \
                                  + Fore.CYAN + self.path_name(self.filepath) + Style.RESET_ALL + "\n" + "Decrypted Message: " + Fore.CYAN + self.dec_ciphertext + Style.RESET_ALL
 
     def rnd_str(self, stringlen=6):
+        # Return's a random string
         letter = string.digits + string.ascii_lowercase
         return "".join(random.choice(letter) for i in range(stringlen))
 
     def check_gen(self):
+        # Check's if a keyfile exists, if not trigger gen methode
         if args.gen:
             backup_salt_true, backup_path_ = self.gen_salt()
             print("Salt generated")
@@ -106,6 +109,7 @@ class PyStegano():
             return
 
     def gen_salt(self):
+        # Generate new Keyfile and save to file
         global backup_salt, backup_path
         backup_salt = False
         if os.path.isfile("salt.pystegano"):
@@ -119,6 +123,7 @@ class PyStegano():
         else: return None, None
 
     def startup_check(self):
+        # Startup Check
         if os.path.isfile("salt.pystegano"):
             self.read_salt()
             print("Startup Check: Salt found » Salt loaded!")
@@ -129,6 +134,7 @@ class PyStegano():
             return False
 
     def filepath_check(self):
+        # Check if the given file in filepath exists, if not exit
         try:
             if os.path.isfile(self.filepath):
                 return True
@@ -140,15 +146,18 @@ class PyStegano():
             sys.exit(0)
 
     def path_name(self, path):
+        # Output method for pathname
         pn = os.path.dirname(path)
         if pn != "": return pn
         else: return "Aktive Directory"
 
     def read_salt(self):
+        # Read keyfile
         with open("salt.pystegano", 'rb') as f:
             self.salt = f.read()
 
     def read_file(self):
+        # Read File with encrypted string
         with open(self.filepath, encoding="ISO-8859-1", mode="r") as f:
             file_data = f.read()
             raw_find = re.findall("\$- .* -\$", file_data)
@@ -157,12 +166,14 @@ class PyStegano():
                 self.ciphertext = re.sub(" -\$", "", tmp_cipher)
 
     def write_file(self):
+        # Append encrypted string to file
         self.ciphertext = "$- " + self.ciphertext + " -$"
         with open(self.filepath, encoding="ISO-8859-1", mode="a+") as f:
             print(self.filepath)
             f.write(self.ciphertext)
 
     def save_to_file(self, *, txt):
+        # Save output to file
         if args.save:
             with open(self.save, 'wt') as f:
                 f.write(txt)
@@ -170,6 +181,7 @@ class PyStegano():
             return
 
     def enc_func(self):
+        # Encryption
         key = hashlib.sha256(str.encode(self.password))
         iv = self.salt
         try:
@@ -181,6 +193,7 @@ class PyStegano():
             sys.exit(0)
 
     def dec_func(self):
+        # Decryption
         key = hashlib.sha256(str.encode(self.password))
         iv = self.salt
         try:
@@ -193,6 +206,7 @@ class PyStegano():
             sys.exit(0)
 
     def run(self):
+        # Control Method
         self.check_gen()
 
         if self.startup_check(): pass
@@ -202,6 +216,7 @@ class PyStegano():
             self.filepath = self.enc
             self.enc_func()
             self.write_file()
+            self.save_to_file(txt="SAVE OUTPUT TO FILE ONLY WORKS AT '-decf' PARAMETER")
             print(self.out(mode="enc"))
         elif args.dec and args.password:
             self.filepath = self.dec
@@ -215,5 +230,6 @@ class PyStegano():
 
 # TO BE CONTINUED ...
 
-pystegano = PyStegano()
-pystegano.run()
+if __name__ == "__main__":
+    pystegano = PyStegano()
+    pystegano.run()
