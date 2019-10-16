@@ -38,7 +38,11 @@ from colorama import Fore, Style
 from Crypto.Cipher import AES
 from Crypto import Random
 from base64 import b64encode, b64decode
-from argparse_shadow import ArgumentParser
+from argparse import ArgumentParser
+
+### Use this when argparse fails. You have to rename first your argparse.py in argparse_shadow.py.
+### This often happens in venv or conda env.
+# from argparse_shadow import ArgumentParser
 
 # Banner
 banner_txt = """
@@ -102,16 +106,17 @@ class PyStegano():
             return
 
     def gen_salt(self):
+        global backup_salt, backup_path
+        backup_salt = False
         if os.path.isfile("salt.pystegano"):
-            global backup_salt, backup_path
             backup_salt = True
             backup_path = "salt_old_" + self.rnd_str() + ".pystegano"
             shutil.move("salt.pystegano", backup_path)
         with open("salt.pystegano", 'wb') as f:
             self.salt = Random.new().read(16)
             f.write(self.salt)
-            if backup_salt: return backup_salt, backup_path
-            return None, None
+        if backup_salt: return backup_salt, backup_path
+        else: return None, None
 
     def startup_check(self):
         if os.path.isfile("salt.pystegano"):
